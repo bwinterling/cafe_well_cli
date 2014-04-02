@@ -11,7 +11,6 @@ class CafeWellCLI < Thor
     will update Cafe Well with the entered activity.
 
   LONGDESC
-
   def update_move_to_improve(date, activity, minutes)
     puts "#{ENV["CAFEWELL_USER"]} did a little #{activity} for #{minutes} mins on #{date}."
     #logged in?
@@ -24,6 +23,12 @@ class CafeWellCLI < Thor
         # click 'Report'
   end
 
+  no_tasks do
+    def go_to_home_page
+
+    end
+  end
+
 end
 
-CafeWellCLI.start()
+# CafeWellCLI.start()
