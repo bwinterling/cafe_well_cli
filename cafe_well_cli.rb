@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'mechanize'
 require 'thor'
+require 'pry'
 
 class CafeWellCLI < Thor
 
@@ -23,12 +24,30 @@ class CafeWellCLI < Thor
         # click 'Report'
   end
 
+  # no_tasks removes public methods from the cli
   no_tasks do
+
     def go_to_home_page
+      agent = Mechanize.new
+      agent.get('http://www.cafewell.com') do |page|
+        @page = page
+      end
+    end
+
+    def at_home_page?
+      @page.title == "\nCaféWell\n\n"
+    end
+
+    def logged_in?
 
     end
+
+    def log_in
+      binding.pry
+    end
+
   end
 
 end
-
+# start() method makes the public methods available in the cli via Thor
 # CafeWellCLI.start()
