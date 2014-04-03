@@ -6,6 +6,8 @@ require_relative 'cafe_well_cli'
 
 class CafeWellCLITest < MiniTest::Unit::TestCase
 
+  #before running tests - comment out line "CafeWellCLI.start()"
+
   def setup
     @cafe_well = CafeWellCLI.new
   end
