@@ -24,26 +24,43 @@ class CafeWellCLI < Thor
         # click 'Report'
   end
 
-  # no_tasks removes public methods from the cli
+  # no_tasks removes public methods from the CLI
   no_tasks do
 
-    def go_to_home_page
-      agent = Mechanize.new
-      agent.get('http://www.cafewell.com') do |page|
-        @page = page
-      end
+    def agent
+      @agent ||= Mechanize.new
+    end
+
+    def go_to_cafe_well
+      @current_page = agent.get('http://www.cafewell.com')
+    end
+
+    def current_page
+      @current_page
+    end
+
+    def current_page=(page)
+      @current_page = page
     end
 
     def at_home_page?
-      @page.title == "\nCaféWell\n\n"
+      #does this work?
+      current_page.title == "\nCaféWell\n\n"
     end
 
     def logged_in?
-
+      current_page.form_with(:id => "user_login_form") == nil
     end
 
     def log_in
-      binding.pry
+      #add logic to handle multiple cases
+
+      login_form = current_page.form_with(:id => "user_login_form") do |form|
+        form.field_with(:name => "user[login]").value = ENV["CAFEWELL_USER"]
+        form.field_with(:name => "user[password]").value = ENV["CAFEWELL_PASSWORD"]
+      end
+
+      @current_page = login_form.submit
     end
 
   end

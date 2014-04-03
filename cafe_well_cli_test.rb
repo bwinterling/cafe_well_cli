@@ -15,13 +15,12 @@ class CafeWellCLITest < MiniTest::Unit::TestCase
   end
 
   def test_reach_cafe_well_home_page?
-    cafe_well.go_to_home_page
+    cafe_well.go_to_cafe_well
     assert cafe_well.at_home_page?
-    refute cafe_well.logged_in?
   end
 
   def test_log_in
-    cafe_well.go_to_home_page
+    cafe_well.go_to_cafe_well
     refute cafe_well.logged_in?
     cafe_well.log_in
     assert cafe_well.logged_in?
