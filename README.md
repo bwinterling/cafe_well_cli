@@ -26,7 +26,7 @@ Here's how you make your entries:
 ```
 **Add Activity** So, you played 30 minutes of ping pong.  After using the above command, you determined that 28 is the ACTIVITY_ID for ping pong.
 
-Write your command like so: add_activity ID MINUTES ["DATE"]
+Write your command like so:  add_activity ID MINUTES ["DATE"]
 
 **Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
 ``` console
@@ -35,6 +35,38 @@ Write your command like so: add_activity ID MINUTES ["DATE"]
     $ bin/cafewell add_activity 28 30
 ```
 
+**Add Meals** You can enter up to 6 healthy meals a day.  Don't be shy.  Let's say you ate four healthy meals.
+
+add_meals MEAL_COUNT ["DATE"]
+
+**Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
+``` console
+    $ bin/cafewell add_meals 4 "03/28/2014"
+    - or -
+    $ bin/cafewell add_meals 4
+```
+
+**Add Stress Breaks** You can add a 'Stress Break' if you took a 10 minute break from your daily grind.  Only 1 per day is accepted, so I've locked it down to prevent you from being a total slacker.
+
+add_break ["DATE"]
+
+**Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
+``` console
+    $ bin/cafewell add_break "03/28/2014"
+    - or -
+    $ bin/cafewell add_break
+```
+
+**Add Family Goal** This one's tough.  Each member of your family must eat 5 or more servings of fruit or veggies, complete 1 or more hours of exercise, consume 0 sugary drinks and log fewer than 2 hours of after work/school screen time.  No cheating.  Pull it off?  Run the following command:
+
+met_family_goal ["DATE"]
+
+**Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
+``` console
+    $ bin/cafewell met_family_goal "03/28/2014"
+    - or -
+    $ bin/cafewell met_family_goal
+```
 
 ## Contributing
 
