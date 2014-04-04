@@ -5,28 +5,36 @@ require 'pry'
 
 class CafeWellCLI < Thor
 
-  desc "update_move_to_improve ACTIVITY_ID MINUTES <DATE>", "updates cafe well with activity activity details, DATE is optional"
+  desc 'add_activity ACTIVITY_ID MINUTES "DATE"', 'new MoveToImprove entry for CafeWell.'
   long_desc <<-LONGDESC
-    >$ cafe_well_cli.rb update_move_to_improve "Walking" "30" "31/04/2014"
+    >$ cafe_well_cli.rb add_activity 49 30 "mm/dd/yyyy"
 
-    Will update Cafe Well with the entered activity.
-    DATE param is optional, and will default to today.
-    For a list of activities, enter 'activity_list'.
+    ACTIVITY_ID => the ID for Walking is 49
+      To look up activities and IDs, use command 'activity_list'
+    MINUTES => I walked for 30 minutes
+    DATE param is optional, and will default to today if blank.
+
+    This updates CafeWell's Move to Improve data.
+    Make sure so sign up in advance.
   LONGDESC
-  def update_move_to_improve(activity_id, minutes, date = today)
-    # puts "#{ENV["CAFEWELL_USER"]} did a little #{activity} for #{minutes} mins on #{date}."
+  def add_activity(activity_id, minutes, date = today)
+    return "Invalid Date" unless valid?(date)
     go_to_cafe_well
     log_in unless logged_in?
     activity_form = current_page.form_with(:action => "/activity_entries/create_activity") do |form|
-      # should verify correct values have been entered
-      # date format is d/m/Y
-      form.field_with(:name => "activity_entry[performed_at]").value = date
+      form.field_with(:name => "activity_entry[performed_at]").value = euro_date(date)
       form.field_with(:name => "activity_entry[activity_id]").value = activity_id
       form.field_with(:name => "activity_entry[activity_unit_value]").value = minutes
     end
-    results_page = activity_form.submit
+    begin
+      results_page = activity_form.submit
+      results = results_page.body
+    rescue Exception => msg
+      results = "Invalid entry: " + msg.to_s
+      puts results
+    end
     @current_page = go_to_cafe_well
-    results_page.body
+    results
   end
 
   desc "activity_list", "List of activities and their IDs."
@@ -35,13 +43,21 @@ class CafeWellCLI < Thor
     log_in unless logged_in?
     activity_form = current_page.form_with(:action => "/activity_entries/create_activity")
     select_list = activity_form.field_with(:name => "activity_entry[activity_id]")
-    select_list.options.each_with_object(Hash.new) do |option, list|
+    @activities = select_list.options.each_with_object(Hash.new) do |option, list|
       list[option.text] = option.value
     end
+    puts "ID ------- Activity"
+    puts "-------------------"
+    @activities.each { |a, id| puts id + " -- " + a }
   end
 
   # no_tasks removes public methods from the CLI
   no_tasks do
+
+    def activities
+      activity_list unless @activities
+      @activities
+    end
 
     def agent
       @agent ||= Mechanize.new
@@ -78,7 +94,17 @@ class CafeWellCLI < Thor
     end
 
     def today
-      Date.today.strftime("%d/%m/%Y")
+      Date.today.strftime("%m/%d/%Y")
+    end
+
+    def valid?(date)
+      date.match(/^[0-1]{1}\d{1}[\/]{1}\d{2}[\/]{1}\d{4}/)
+    end
+
+    # day and month need to be switched for CafeWell form entry
+    def euro_date(date)
+      date_parts = date.split("/")
+      "#{date_parts[1]}/#{date_parts[0]}/#{date_parts[2]}"
     end
 
   end

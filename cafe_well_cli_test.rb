@@ -28,12 +28,40 @@ class CafeWellCLITest < MiniTest::Unit::TestCase
     assert cafe_well.logged_in?
   end
 
+  def test_valid_date
+    date = "31/04/2014"
+    refute cafe_well.valid?(date)
+    date = "4/25/2014"
+    refute cafe_well.valid?(date)
+    date = "04/12/14"
+    refute cafe_well.valid?(date)
+    date = "04-23-2014"
+    refute cafe_well.valid?(date)
+    date = "04/28/2014"
+    assert cafe_well.valid?(date)
+  end
+
+  def test_date_conversion
+    date = "04/25/2014"
+    assert_equal "25/04/2014", cafe_well.euro_date(date)
+  end
+
   def test_activity_entry
+    skip
     activity = 49
-    minutes = 20
-    date = "31/03/2014"
-    results = "{\"last_progress_info\":\"<p>Last logged\\n<strong>20</strong>\\nminutes of\\nWalking\\nfor\\n<strong>Mar 31, 2014 at 12:00 AM MDT</strong>\\n<a href=\\\"/tracks/move-to-Improve-aetna\\\">View Track log</a>\\n</p>\\n\"}"
-    assert results, cafe_well.update_move_to_improve(activity, minutes, date)
+    minutes = 15
+    date = "04/04/2014"
+    results = "{\"last_progress_info\":\"<p>Last logged\\n<strong>15</strong>\\nminutes of\\nWalking\\nfor\\n<strong>Apr 4, 2014 at 12:00 AM MDT</strong>\\n<a href=\\\"/tracks/move-to-Improve-aetna\\\">View Track log</a>\\n</p>\\n\"}"
+    assert_equal results, cafe_well.add_activity(activity, minutes, date)
+  end
+
+  def test_invalid_activity_ID_entry
+    skip
+    activity = 900
+    minutes = 13
+    date = "04/04/2014"
+    results = "{\"last_progress_info\":\"<p>Last logged\\n<strong>15</strong>\\nminutes of\\nWalking\\nfor\\n<strong>Apr 4, 2014 at 12:00 AM MDT</strong>\\n<a href=\\\"/tracks/move-to-Improve-aetna\\\">View Track log</a>\\n</p>\\n\"}"
+    assert cafe_well.add_activity(activity, minutes, date).start_with?("Invalid")
   end
 
 end
