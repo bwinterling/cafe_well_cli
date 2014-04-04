@@ -54,6 +54,26 @@ class CafeWellCLI < Thor
     @activities.each { |name, id| puts id + " -- " + name }
   end
 
+
+
+  desc "info", "Explains the CafeWell incentives"
+  def info
+    puts <<-INFO
+      Move To Improve:
+        Earn up to $300
+        For every minute of exercise, you earn a point
+        First 2,000 points = $25
+        Each 1,000 points after is another $25
+
+      Healthy Eating:  Food Swap Challenge (ends 6/30/2014)
+        Earn up to $300
+        Enter how many healthy meals you ate that day (max 6)
+        Every healthy meal earns a point
+        First 130 points = $25
+        Each 60 points after is another $25
+    INFO
+  end
+
   # no_tasks removes public methods from the CLI
   no_tasks do
 
@@ -114,4 +134,4 @@ class CafeWellCLI < Thor
 
 end
 # start() method makes the public methods available in the cli via Thor
-# CafeWellCLI.start()
+CafeWellCLI.start()
