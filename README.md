@@ -20,11 +20,11 @@ export CAFEWELL_PASSWORD="your_password"
 
 Here's how you make your entries:
 
-* **Activity List** You'll need the ACTIVITY_ID of your activity to make an entry.
+**Activity List** You'll need the ACTIVITY_ID of your activity to make an entry.
 ``` console
     $ bin/cafewell activity_list
 ```
-* **Add Activity** So, you played 30 minutes of ping pong.  After using the above command, you determined that 28 is the ACTIVITY_ID for ping pong.
+**Add Activity** So, you played 30 minutes of ping pong.  After using the above command, you determined that 28 is the ACTIVITY_ID for ping pong.
 
 Write your command like so: add_activity ID MINUTES ["DATE"]
 
