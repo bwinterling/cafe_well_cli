@@ -65,6 +65,7 @@ class CafeWellCLI < Thor
     Make sure to sign up in advance at www.cafewell.com
     Set up your username and password as ENV variables
     CAFEWELL_USER & CAFEWELL_PASSWORD
+    Food Swap Challenge (ends 6/30/2014)
   LONGDESC
   def add_meals(meal_count, date = today)
     return "Invalid Date" unless valid?(date)
@@ -96,6 +97,7 @@ class CafeWellCLI < Thor
     Make sure to sign up in advance at www.cafewell.com
     Set up your username and password as ENV variables
     CAFEWELL_USER & CAFEWELL_PASSWORD
+    Stress Break (ends 4/30/2014)
   LONGDESC
   def add_break(date = today)
     return "Invalid Date" unless valid?(date)
@@ -109,6 +111,27 @@ class CafeWellCLI < Thor
       results_page = break_form.submit
       results = results_page.body
       puts "Added break."
+    rescue Exception => msg
+      results = "Invalid entry: " + msg.to_s
+      puts results
+    end
+    @current_page = go_to_cafe_well
+    results
+  end
+
+  desc 'met_family_goal ["DATE"]', 'new Family Goal entry for CafeWell'
+  def met_family_goal(date = today)
+    return "Invalid Date" unless valid?(date)
+    go_to_cafe_well
+    log_in unless logged_in?
+    family_goal_form = current_page.form_with(:action => "/challenges/5210-campaign/post_progress") do |form|
+      form.field_with(:name => "user_challenge_progress[activity_date]").value = euro_date(date)
+      form.field_with(:name => "user_challenge_progress[reported_value]").value = 1
+    end
+    begin
+      results_page = family_goal_form.submit
+      results = results_page.body
+      puts "Added family goal day."
     rescue Exception => msg
       results = "Invalid entry: " + msg.to_s
       puts results
@@ -137,6 +160,16 @@ class CafeWellCLI < Thor
         Earn up to $150
         Report one stress break every day you take a 10 minute break
         Only receive credit for one break per day
+
+      Family Activity: 5210 Campaign (ends 6/30/2014)
+        Earn up to $100
+        Daily Goal:
+          5 or more fruits or vegetables
+          2 hours or fewer screen time after work/school
+          1 hour or more exercise
+          0 sugary drinks
+        Report one successful Campaign Day when the majority of
+        your family members meet this goal
     INFO
   end
 
