@@ -6,7 +6,8 @@ require_relative 'cafe_well_cli'
 
 class CafeWellCLITest < MiniTest::Unit::TestCase
 
-  #before running tests - comment out line "CafeWellCLI.start()"
+  # before running tests - comment out line "CafeWellCLI.start()"
+  # you need to have a username and password set up as environment variables
 
   def setup
     @cafe_well = CafeWellCLI.new

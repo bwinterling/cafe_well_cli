@@ -12,10 +12,12 @@ class CafeWellCLI < Thor
     ACTIVITY_ID => the ID for Walking is 49
       To look up activities and IDs, use command 'activity_list'
     MINUTES => I walked for 30 minutes
-    DATE param is optional, and will default to today if blank.
+    DATE param is optional, and will default to today if blank
 
-    This updates CafeWell's Move to Improve data.
-    Make sure so sign up in advance.
+    This updates CafeWell's Move to Improve data
+    Make sure to sign up in advance at www.cafewell.com
+    Set up your username and password as ENV variables
+    CAFEWELL_USER & CAFEWELL_PASSWORD
   LONGDESC
   def add_activity(activity_id, minutes, date = today)
     return "Invalid Date" unless valid?(date)
