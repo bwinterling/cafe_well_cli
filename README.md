@@ -11,9 +11,9 @@ Before you can use this gem, be sure to create an account at [www.cafewell.com](
     $ gem install cafe_well_cli
 
 Be sure to add your CafeWell.com username and password as environment variables.
-```.bashrc
-    export CAFEWELL_USER="your_username"
-    export CAFEWELL_PASSWORD="your_password"
+``` .bashrc
+export CAFEWELL_USER="your_username"
+export CAFEWELL_PASSWORD="your_password"
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ Be sure to add your CafeWell.com username and password as environment variables.
 Here's how you make your entries:
 
 * **Add Activity** You can add blah blab blah
-```console
+``` console
     $ command goes here
 ```
 
