@@ -48,11 +48,11 @@ class CafeWellCLITest < MiniTest::Unit::TestCase
   end
 
   def test_activity_entry
-    skip
-    activity = 49
-    minutes = 15
-    date = "04/04/2014"
-    results = "{\"last_progress_info\":\"<p>Last logged\\n<strong>15</strong>\\nminutes of\\nWalking\\nfor\\n<strong>Apr 4, 2014 at 12:00 AM MDT</strong>\\n<a href=\\\"/tracks/move-to-Improve-aetna\\\">View Track log</a>\\n</p>\\n\"}"
+    # skip
+    activity = 10
+    minutes = 30
+    date = "04/03/2014"
+    results = "{\"last_progress_info\":\"<p>Last logged\\n<strong>30</strong>\\nminutes of\\nCooking\\nfor\\n<strong>Apr 3, 2014 at 12:00 AM MDT</strong>\\n<a href=\\\"/tracks/move-to-Improve-aetna\\\">View Track log</a>\\n</p>\\n\"}"
     assert_equal results, cafe_well.add_activity(activity, minutes, date)
   end
 
@@ -79,6 +79,7 @@ class CafeWellCLITest < MiniTest::Unit::TestCase
   end
 
   def test_family_goal_entry
+    skip
     date = "04/01/2014"
     refute cafe_well.met_family_goal(date).start_with?("Invalid")
   end
