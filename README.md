@@ -24,8 +24,10 @@ Here's how you make your entries:
 ``` console
     $ bin/cafewell activity_list
 ```
-* **Add Activity** So, you played 30 minutes of ping pong.  After using the above command, you determined that 28 is the ID for ping pong.  Follow the following format:
-add_activity ID MINUTES ["DATE"]
+* **Add Activity** So, you played 30 minutes of ping pong.  After using the above command, you determined that 28 is the ACTIVITY_ID for ping pong.
+
+Write your command like so: add_activity ID MINUTES ["DATE"]
+
 **Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
 ``` console
     $ bin/cafewell add_activity 28 30 "03/28/2014"
