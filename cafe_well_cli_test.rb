@@ -65,4 +65,11 @@ class CafeWellCLITest < MiniTest::Unit::TestCase
     assert cafe_well.add_activity(activity, minutes, date).start_with?("Invalid")
   end
 
+  def test_meal_entry
+    skip
+    date = "04/02/2014"
+    meals = 4
+    refute cafe_well.add_meals(meals, date).start_with?("Invalid")
+  end
+
 end

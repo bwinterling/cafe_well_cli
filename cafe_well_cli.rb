@@ -5,7 +5,7 @@ require 'pry'
 
 class CafeWellCLI < Thor
 
-  desc 'add_activity ACTIVITY_ID MINUTES "DATE"', 'new MoveToImprove entry for CafeWell.'
+  desc 'add_activity ACTIVITY_ID MINUTES ["DATE"]', 'new MoveToImprove entry for CafeWell.'
   long_desc <<-LONGDESC
     >$ cafe_well_cli.rb add_activity 49 30 "mm/dd/yyyy"
 
@@ -54,7 +54,37 @@ class CafeWellCLI < Thor
     @activities.each { |name, id| puts id + " -- " + name }
   end
 
+  desc "add_meals", "new Food Swap Challenge entry for CafeWell"
+    long_desc <<-LONGDESC
+    >$ cafe_well_cli.rb add_meals MEAL_COUNT "mm/dd/yyyy"
 
+    MEAL_COUNT => total healthy meals for the day
+    DATE param is optional, and will default to today if blank
+
+    This updates CafeWell's Food Swap Challenge
+    Make sure to sign up in advance at www.cafewell.com
+    Set up your username and password as ENV variables
+    CAFEWELL_USER & CAFEWELL_PASSWORD
+  LONGDESC
+  def add_meals(meal_count, date = today)
+    return "Invalid Date" unless valid?(date)
+    go_to_cafe_well
+    log_in unless logged_in?
+    meal_form = current_page.form_with(:action => "/challenges/food-swap-challenge/post_progress") do |form|
+      form.field_with(:name => "user_challenge_progress[activity_date]").value = euro_date(date)
+      form.field_with(:name => "user_challenge_progress[reported_value]").value = meal_count
+    end
+    begin
+      results_page = meal_form.submit
+      results = results_page.body
+      puts "Added meals."
+    rescue Exception => msg
+      results = "Invalid entry: " + msg.to_s
+      puts results
+    end
+    @current_page = go_to_cafe_well
+    results
+  end
 
   desc "info", "Explains the CafeWell incentives"
   def info
@@ -134,4 +164,4 @@ class CafeWellCLI < Thor
 
 end
 # start() method makes the public methods available in the cli via Thor
-CafeWellCLI.start()
+# CafeWellCLI.start()
