@@ -2,7 +2,7 @@ gem 'minitest', '~> 4.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'capybara'
-require_relative 'cafe_well_cli'
+require './lib/cafe_well_cli'
 
 class CafeWellCLITest < MiniTest::Unit::TestCase
 

@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'cafe_well_cli'
+
+# start() method makes the public methods in cafe_well_cli available via Thor
+CafeWellCLI.start(ARGV)

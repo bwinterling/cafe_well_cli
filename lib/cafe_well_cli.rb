@@ -1,6 +1,5 @@
-# require 'mechanize'
-# require 'thor'
-# require 'pry'
+require 'mechanize'
+require 'thor'
 
 class CafeWellCLI < Thor
 
@@ -216,5 +215,3 @@ class CafeWellCLI < Thor
   end
 
 end
-# start() method makes the public methods available in the cli via Thor
-CafeWellCLI.start()
