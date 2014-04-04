@@ -20,15 +20,15 @@ export CAFEWELL_PASSWORD="your_password"
 
 Here's how you make your entries:
 
-**Activity List** (all of 2014)
+**Activity List** (valid all of 2014)
 
-You'll need the ACTIVITY_ID of your activity to make an entry.
+You'll need the ACTIVITY_ID of your activity to make an entry.  To see a list of valid activities, use the activity_list command.
 ``` console
     $ cafewell activity_list
 ```
 **Add Activity** So, you played 30 minutes of ping pong.  After using the above command, you determined that 28 is the ACTIVITY_ID for ping pong.
 
-Write your command like so:  add_activity ID MINUTES ["DATE"]
+Write your command like so:  add_activity ACTIVITY_ID MINUTES ["DATE"]
 
 **Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
 ``` console
