@@ -72,4 +72,9 @@ class CafeWellCLITest < MiniTest::Unit::TestCase
     refute cafe_well.add_meals(meals, date).start_with?("Invalid")
   end
 
+  def test_break_entry
+    date = "04/01/2014"
+    refute cafe_well.add_break(date).start_with?("Invalid")
+  end
+
 end

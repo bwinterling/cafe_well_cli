@@ -5,6 +5,20 @@ require 'pry'
 
 class CafeWellCLI < Thor
 
+  desc 'activity_list', 'List of activities and their IDs.'
+  def activity_list
+    go_to_cafe_well
+    log_in unless logged_in?
+    activity_form = current_page.form_with(:action => "/activity_entries/create_activity")
+    select_list = activity_form.field_with(:name => "activity_entry[activity_id]")
+    @activities = select_list.options.each_with_object(Hash.new) do |option, list|
+      list[option.text] = option.value
+    end
+    puts "ID ------- Activity"
+    puts "-------------------"
+    @activities.each { |name, id| puts id + " -- " + name }
+  end
+
   desc 'add_activity ACTIVITY_ID MINUTES ["DATE"]', 'new MoveToImprove entry for CafeWell.'
   long_desc <<-LONGDESC
     >$ cafe_well_cli.rb add_activity 49 30 "mm/dd/yyyy"
@@ -40,22 +54,8 @@ class CafeWellCLI < Thor
     results
   end
 
-  desc "activity_list", "List of activities and their IDs."
-  def activity_list
-    go_to_cafe_well
-    log_in unless logged_in?
-    activity_form = current_page.form_with(:action => "/activity_entries/create_activity")
-    select_list = activity_form.field_with(:name => "activity_entry[activity_id]")
-    @activities = select_list.options.each_with_object(Hash.new) do |option, list|
-      list[option.text] = option.value
-    end
-    puts "ID ------- Activity"
-    puts "-------------------"
-    @activities.each { |name, id| puts id + " -- " + name }
-  end
-
-  desc "add_meals", "new Food Swap Challenge entry for CafeWell"
-    long_desc <<-LONGDESC
+  desc 'add_meals MEAL_COUNT ["DATE"]', 'new Food Swap Challenge entry for CafeWell'
+  long_desc <<-LONGDESC
     >$ cafe_well_cli.rb add_meals MEAL_COUNT "mm/dd/yyyy"
 
     MEAL_COUNT => total healthy meals for the day
@@ -86,6 +86,37 @@ class CafeWellCLI < Thor
     results
   end
 
+  desc 'add_break ["DATE"]', 'new Stress Break entry for CafeWell'
+  long_desc <<-LONGDESC
+    >$ cafe_well_cli.rb add_break "mm/dd/yyyy"
+
+    DATE param is optional, and will default to today if blank
+
+    This adds a Stress Break to CafeWell's Stress Management plan
+    Make sure to sign up in advance at www.cafewell.com
+    Set up your username and password as ENV variables
+    CAFEWELL_USER & CAFEWELL_PASSWORD
+  LONGDESC
+  def add_break(date = today)
+    return "Invalid Date" unless valid?(date)
+    go_to_cafe_well
+    log_in unless logged_in?
+    break_form = current_page.form_with(:action => "/challenges/stress-break/post_progress") do |form|
+      form.field_with(:name => "user_challenge_progress[activity_date]").value = euro_date(date)
+      form.field_with(:name => "user_challenge_progress[reported_value]").value = 1
+    end
+    begin
+      results_page = break_form.submit
+      results = results_page.body
+      puts "Added break."
+    rescue Exception => msg
+      results = "Invalid entry: " + msg.to_s
+      puts results
+    end
+    @current_page = go_to_cafe_well
+    results
+  end
+
   desc "info", "Explains the CafeWell incentives"
   def info
     puts <<-INFO
@@ -101,6 +132,11 @@ class CafeWellCLI < Thor
         Every healthy meal earns a point
         First 130 points = $25
         Each 60 points after is another $25
+
+      Stress Break: (ends 4/30/2014)
+        Earn up to $150
+        Report one stress break every day you take a 10 minute break
+        Only receive credit for one break per day
     INFO
   end
 
