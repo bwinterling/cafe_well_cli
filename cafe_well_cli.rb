@@ -29,6 +29,7 @@ class CafeWellCLI < Thor
     begin
       results_page = activity_form.submit
       results = results_page.body
+      puts "Added activity."
     rescue Exception => msg
       results = "Invalid entry: " + msg.to_s
       puts results
@@ -48,7 +49,7 @@ class CafeWellCLI < Thor
     end
     puts "ID ------- Activity"
     puts "-------------------"
-    @activities.each { |a, id| puts id + " -- " + a }
+    @activities.each { |name, id| puts id + " -- " + name }
   end
 
   # no_tasks removes public methods from the CLI
