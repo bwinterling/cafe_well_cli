@@ -4,7 +4,7 @@ Many companies offer insurance incentives using CafeWell.  The intent of this
 CLI is to make entering your acheivements simple, so you don't leave cash
 on the table.
 
-Before you can use this gem, be sure to create an account at [www.cafewell.com](http://www.cafewell.com/ "CafeWell")
+Before you can use this gem, be sure to create an account at [www.cafewell.com](http://www.cafewell.com/ "CafeWell") and sign up for the various campaigns.  If you haven't joined the campaigns, this CLI will not work.  Sad face.
 
 ## Installation
 
@@ -24,7 +24,7 @@ Here's how you make your entries:
 
 You'll need the ACTIVITY_ID of your activity to make an entry.
 ``` console
-    $ bin/cafewell activity_list
+    $ cafewell activity_list
 ```
 **Add Activity** So, you played 30 minutes of ping pong.  After using the above command, you determined that 28 is the ACTIVITY_ID for ping pong.
 
@@ -32,9 +32,9 @@ Write your command like so:  add_activity ID MINUTES ["DATE"]
 
 **Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
 ``` console
-    $ bin/cafewell add_activity 28 30 "03/28/2014"
+    $ cafewell add_activity 28 30 "03/28/2014"
     - or -
-    $ bin/cafewell add_activity 28 30
+    $ cafewell add_activity 28 30
 ```
 
 **Add Meals** (ends 6/30/2014)
@@ -45,9 +45,9 @@ add_meals MEAL_COUNT ["DATE"]
 
 **Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
 ``` console
-    $ bin/cafewell add_meals 4 "03/28/2014"
+    $ cafewell add_meals 4 "03/28/2014"
     - or -
-    $ bin/cafewell add_meals 4
+    $ cafewell add_meals 4
 ```
 
 **Add Stress Breaks** (ends 4/30/2014)
@@ -58,9 +58,9 @@ add_break ["DATE"]
 
 **Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
 ``` console
-    $ bin/cafewell add_break "03/28/2014"
+    $ cafewell add_break "03/28/2014"
     - or -
-    $ bin/cafewell add_break
+    $ cafewell add_break
 ```
 
 **Add Family Goal** (ends 6/30/2014)
@@ -71,9 +71,9 @@ met_family_goal ["DATE"]
 
 **Note:** DATE is optional, and must be "mm/dd/yyyy" format.  Defaults to today if blank.
 ``` console
-    $ bin/cafewell met_family_goal "03/28/2014"
+    $ cafewell met_family_goal "03/28/2014"
     - or -
-    $ bin/cafewell met_family_goal
+    $ cafewell met_family_goal
 ```
 
 ## Contributing
