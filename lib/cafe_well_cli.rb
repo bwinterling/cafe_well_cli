@@ -1,7 +1,6 @@
-require 'rubygems'
-require 'mechanize'
-require 'thor'
-require 'pry'
+# require 'mechanize'
+# require 'thor'
+# require 'pry'
 
 class CafeWellCLI < Thor
 

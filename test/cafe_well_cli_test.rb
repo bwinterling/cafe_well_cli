@@ -48,7 +48,7 @@ class CafeWellCLITest < MiniTest::Unit::TestCase
   end
 
   def test_activity_entry
-    # skip
+    skip
     activity = 10
     minutes = 30
     date = "04/03/2014"
