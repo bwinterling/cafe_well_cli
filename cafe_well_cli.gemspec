@@ -1,13 +1,13 @@
 Gem::Specification.new do |s|
   s.name          = 'cafe_well_cli'
-  s.version       = '0.1.0'
+  s.version       = '0.1.1'
   s.date          = '2014-04-01'
   s.summary       = "A CLI interface to update your CafeWell health incentives."
   s.description   = "Allows you to enter activities, meals, stress breaks (etc) to receive\ncredit for CafeWell incentives."
   s.authors       = ["Brian Winterling"]
   s.email         = 'bwinterling@users.noreply.github.com'
   s.homepage      =
-    'http://rubygems.org/gems/cafe_well_cli'
+    'http://github.com/bwinterling/cafe_well_cli'
   s.license       = 'MIT'
 
   s.files         = `git ls-files`.split($/)
