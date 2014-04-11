@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'cafe_well_cli'
-  s.version       = '0.1.1'
+  s.version       = '0.1.3'
   s.date          = '2014-04-01'
   s.summary       = "A CLI interface to update your CafeWell health incentives."
   s.description   = "Allows you to enter activities, meals, stress breaks (etc) to receive\ncredit for CafeWell incentives."

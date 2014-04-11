@@ -84,4 +84,10 @@ class CafeWellCLITest < MiniTest::Unit::TestCase
     refute cafe_well.met_family_goal(date).start_with?("Invalid")
   end
 
+  def test_sleep_entry
+    skip
+    date = "04/11/2014"
+    refute cafe_well.add_sleep(date).start_with?("Invalid")
+  end
+
 end

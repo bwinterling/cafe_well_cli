@@ -103,9 +103,32 @@ class CafeWellCLI < Thor
     log_in
     family_goal_form = current_page.form_with(:action => "/challenges/5210-campaign/post_progress") do |form|
       form.field_with(:name => "user_challenge_progress[activity_date]").value = euro_date(date)
-      form.field_with(:name => "user_challenge_progress[reported_value]").value = 1
+      form.field_with(:name => "user_challenge_progress[reported_value]").value = 2
     end
     submit(family_goal_form, "Added family goal day.")
+  end
+
+  desc 'add_sleep ["DATE"]', 'new Rest and Reset entry for CafeWell'
+  long_desc <<-LONGDESC
+    >$ cafe_well_cli.rb add_sleep "mm/dd/yyyy"
+
+    DATE param is optional, and will default to today if blank
+
+    This updates CafeWell's Sleep: Rest and Reset Campaign
+    Make an entry for each night you sleep 7 or more hours.
+    Make sure to sign up in advance at www.cafewell.com
+    Set up your username and password as ENV variables
+    CAFEWELL_USER & CAFEWELL_PASSWORD
+    Rest and Reset Campaign (ends 12/31/2014)
+  LONGDESC
+  def add_sleep(date = today)
+    return "Invalid Date" unless valid?(date)
+    log_in
+    sleep_form = current_page.form_with(:action => "/challenges/rest-and-reset/post_progress") do |form|
+      form.field_with(:name => "user_challenge_progress[activity_date]").value = euro_date(date)
+      form.field_with(:name => "user_challenge_progress[reported_value]").value = 1
+    end
+    submit(sleep_form, "Added sleep.")
   end
 
   desc "info", "Explains the CafeWell incentives"
@@ -123,6 +146,10 @@ class CafeWellCLI < Thor
         Every healthy meal earns a point
         First 130 points = $25
         Each 60 points after is another $25
+
+      Rest and Reset:  (ends 12/31/2014)
+        Earn up to $150
+        Report each night you've gotten at least 7 hours of sleep.
 
       Stress Break: (ends 4/30/2014)
         Earn up to $150
